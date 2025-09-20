@@ -19,6 +19,7 @@ class CouponCodeGenerationError(Exception):
 
                                             raise CouponCodeGenerationError(
                                                     f"Failed to generate a unique coupon code after {max_attempts} attempts. "
-                                                            "Consider increasing `length` or `max_attempts` for better uniqueness."
+                                                            "Consider increasing `length` or `max_attempts`."
                                                                 )
+                                                                
                                                                 
