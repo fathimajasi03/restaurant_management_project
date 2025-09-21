@@ -1,15 +1,15 @@
 # home/urls.py
 
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import MenuItemViewSet
-from django.urls import path, include
 
-# Create a router and register your viewsets with it
+# Create router and register viewsets
 router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
 
-# The API URLs are now determined automatically by the router
+# Define urlpatterns including router URLs
 urlpatterns = [
-    path('api/', include(router.urls)),  # Include all router-registered URLs under 'api/'
+    path('api/', include(router.urls)),
     ]
     
