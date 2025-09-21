@@ -6,6 +6,6 @@ router = DefaultRouter()
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
 
 urlpatterns = [
-    path('api/', include(restaurant_management_system.urls)),
+    path('api/', include(hom.urls)),
     ]
     
