@@ -1,26 +1,15 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
+from .models import Order
+from .serializers import OrderSerializer
 
-from .models import Item
-from .serializers import ItemSerializer
+class UserOrderHistoryAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
-'''
-NOTE: Conside this as a reference and follow this same coding structure or format to work on you tasks
-'''
-
-# Create your views here.
-class ItemView(APIView):
-
-    def get(self, request):
-        items = Item.objects.all()
-        serializer = ItemSerializer(items, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = ItemSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        def get(self, request):
+                user = request.user
+                        orders = Order.objects.filter(user=user).order_by('-order_date')
+                                serializer = OrderSerializer(orders, many=True)
+                                        return Response(serializer.data)
+                                        
