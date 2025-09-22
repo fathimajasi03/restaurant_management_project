@@ -1,15 +1,15 @@
-from django.contrib.auth.models import User
 from django.db import models
 
-class OrderItem(models.Model):
-    order = models.ForeignKey('Order', related_name='items', on_delete=models.CASCADE)
-        product_name = models.CharField(max_length=255)
-            quantity = models.PositiveIntegerField()
-                price = models.DecimalField(max_digits=8, decimal_places=2)
+class ActiveOrderManager(models.Manager):
+    def get_active_orders(self):
+            return self.get_queryset().filter(status__in=['pending', 'processing'])
 
-                class Order(models.Model):
-                    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
-                        order_date = models.DateTimeField(auto_now_add=True)
-                            total_price = models.DecimalField(max_digits=10, decimal_places=2)
-                            
+            class Order(models.Model):
+                    # existing fields...
+                        status = models.CharField(max_length=20)
+
+                            objects = models.Manager()  # The default manager
+                                active_orders = ActiveOrderManager()  # Your custom manager
+                                
+
                                               
