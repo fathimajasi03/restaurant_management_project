@@ -1,25 +1,20 @@
 import string
 import secrets
-from typing import Optional
-from .models import Coupon  # Replace with your actual Coupon model
+from orders.models import Order
 
-
-class CouponCodeGenerationError(Exception):
-    pass
-
-
-    def generate_coupon_code(length: Optional[int] = 10, max_attempts: int = 1000) -> str:
-        characters = string.ascii_uppercase + string.digits
-
-            for _ in range(max_attempts):
-                    potential_code = ''.join(secrets.choice(characters) for _ in range(length))
-
-                            if not Coupon.objects.filter(code=potential_code).exists():
-                                        return potential_code
-
-                                            raise CouponCodeGenerationError(
-                                                    f"Failed to generate a unique coupon code after {max_attempts} attempts. "
-                                                            "Consider increasing `length` or `max_attempts`."
-                                                                )
-                                                                
-                                                                
+def generate_unique_order_id(length=8):
+    """
+        Generate a unique short alphanumeric ID for orders.
+            
+                Args:
+                        length (int): Length of the generated ID. Default is 8.
+                            
+                                Returns:
+                                        str: The unique order ID.
+                                            """
+                                                chars = string.ascii_letters + string.digits
+                                                    while True:
+                                                            new_id = ''.join(secrets.choice(chars) for _ in range(length))
+                                                                    if not Order.objects.filter(order_id=new_id).exists():
+                                                                                return new_id
+                                                                                
