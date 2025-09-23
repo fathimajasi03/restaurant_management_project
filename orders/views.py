@@ -6,6 +6,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Order
 from .serializers import OrderSerializer
+from orders.utils import generate_unique_order_id
+
+# Example usage during order creation
+unique_id = generate_unique_order_id()
+order = Order.objects.create(order_id=unique_id, ...)  # add other fields as needed
+
 
 class UserOrderHistoryAPIView(APIView):
     permission_classes = [IsAuthenticated]
