@@ -1,11 +1,10 @@
 from django.db import models
 
-class MenuItem(models.Model):
+class ContactFormSubmission(models.Model):
     name = models.CharField(max_length=255)
-        description = models.TextField(blank=True)
-            price = models.DecimalField(max_digits=6, decimal_places=2)
-                available = models.BooleanField(default=True)
+        email = models.EmailField()
+            message = models.TextField()
 
-                    def __str__(self):
-                            return self.name
-                            
+                def __str__(self):
+                        return f"Contact from {self.name} <{self.email}>"
+                        
