@@ -1,24 +1,25 @@
-from django.shortcuts import render
-
-# Create your views here.
+from rest_framework import status, permissions
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Order
-from .serializers import OrderSerializer
-from orders.utils import generate_unique_order_id
 
-# Example usage during order creation
-unique_id = generate_unique_order_id()
-order = Order.objects.create(order_id=unique_id, ...)  # add other fields as needed
+class CancelOrderView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
+        def delete(self, request, order_id):
+                try:
+                            order = Order.objects.get(id=order_id)
+                                    except Order.DoesNotExist:
+                                                return Response({"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
 
-class UserOrderHistoryAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+                                                        if order.user != request.user:
+                                                                    return Response({"error": "You are not authorized to cancel this order."},
+                                                                                                status=status.HTTP_403_FORBIDDEN)
 
-        def get(self, request):
-                user = request.user
-                        orders = Order.objects.filter(user=user).order_by('-order_date')
-                                serializer = OrderSerializer(orders, many=True)
-                                        return Response(serializer.data)
-                                        
+                                                                                                        if order.status == 'Cancelled':
+                                                                                                                    return Response({"message": "Order is already cancelled."}, status=status.HTTP_400_BAD_REQUEST)
+
+                                                                                                                            order.status = 'Cancelled'
+                                                                                                                                    order.save()
+                                                                                                                                            return Response({"message": "Order cancelled successfully."}, status=status.HTTP_200_OK)
+                                                                                                                                            
