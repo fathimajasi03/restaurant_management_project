@@ -1,14 +1,23 @@
-from django.contrib.auth.models import User
-from django.db import models
+ from django.test import TestCase
+ from decimal import Decimal
+ from orders.models import Order, OrderItem
+ from home.models import MenuItem
+ from django.contrib.auth.models import User
 
-class OrderItem(models.Model):
-    order = models.ForeignKey('Order', related_name='items', on_delete=models.CASCADE)
-        product_name = models.CharField(max_length=255)
-            quantity = models.PositiveIntegerField()
-                price = models.DecimalField(max_digits=8, decimal_places=2)
+ class OrderModelTest(TestCase):
+     def setUp(self):
+             user = User.objects.create_user(username='tester', password='pass')
+                     self.menu_item = MenuItem.objects.create(name='Burger', price=Decimal('5.00'))
+                             self.order = Order.objects.create(user=user)
 
-                class Order(models.Model):
-                    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
-                        order_date = models.DateTimeField(auto_now_add=True)
-                            total_price = models.DecimalField(max_digits=10, decimal_places=2)
-                            
+                                 def test_calculate_total(self):
+                                         OrderItem.objects.create(
+                                                     order=self.order, menu_item=self.menu_item, quantity=2, price=Decimal('5.00')
+                                                             )
+                                                                     OrderItem.objects.create(
+                                                                                 order=self.order, menu_item=self.menu_item, quantity=1, price=Decimal('5.00')
+                                                                                         )
+
+                                                                                                 total = self.order.calculate_total()
+                                                                                                         self.assertEqual(total, Decimal('15.00'))
+                                                                                                         
