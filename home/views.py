@@ -1,10 +1,8 @@
-from home.utils import send_email
+ from rest_framework import generics
+ from .models import MenuItem
+ from .serializers import DailySpecialSerializer
 
-def some_view(request):
-    result = send_email(
-            recipient_email="test@example.com",
-                    subject="Welcome!",
-                            message_body="Thank you for contacting us."
-                                )
-                                    # result is a dict: {'success': True/False, 'message': "..."}
-                                    
+ class DailySpecialsListAPIView(generics.ListAPIView):
+     queryset = MenuItem.objects.filter(is_daily_special=True)
+         serializer_class = DailySpecialSerializer
+                                           
