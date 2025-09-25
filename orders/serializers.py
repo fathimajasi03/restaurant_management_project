@@ -1,15 +1,14 @@
-from rest_framework import serializers
-from .models import Order, OrderItem
+       from rest_framework import serializers
+       from .models import Order
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    class Meta:
-            model = OrderItem
-                    fields = ['product_name', 'quantity', 'price']
+       class OrderStatusUpdateSerializer(serializers.ModelSerializer):
+           class Meta:
+                   model = Order
+                           fields = ['status']
 
-                    class OrderSerializer(serializers.ModelSerializer):
-                        items = OrderItemSerializer(many=True, read_only=True)
-
-                            class Meta:
-                                    model = Order
-                                            fields = ['id', 'order_date', 'total_price', 'items']
-                                            
+                               def validate_status(self, value):
+                                       allowed_statuses = [choice[0] for choice in Order.STATUS_CHOICES]
+                                               if value not in allowed_statuses:
+                                                           raise serializers.ValidationError("Invalid status.")
+                                                                   return value
+                                                                                                    
