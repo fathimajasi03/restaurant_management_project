@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import ContactFormSubmissionCreateAPIView
+from .views import DailySpecialsListAPIView
 
 urlpatterns = [
-    path('contact/', ContactFormSubmissionCreateAPIView.as_view(), name='contact-form'),
-    ]
-    
+    # other urls
+        path('daily-specials/', DailySpecialsListAPIView.as_view(), name='daily-specials'),
+        ]
+        
