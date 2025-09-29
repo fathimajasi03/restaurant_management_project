@@ -1,8 +1,11 @@
-from django.urls import path
-from .views import UserReviewCreateView, MenuItemReviewsListView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import MenuCategoryViewSet
+
+router = DefaultRouter()
+router.register(r'menu-categories', MenuCategoryViewSet, basename='menu-category')
 
 urlpatterns = [
-    path('reviews/', UserReviewCreateView.as_view(), name='review-create'),
-        path('menu-items/<int:menu_item_id>/reviews/', MenuItemReviewsListView.as_view(), name='menuitem-reviews'),
-        ]
-        
+    path('', include(router.urls)),
+    ]
+    
