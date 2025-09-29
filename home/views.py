@@ -1,8 +1,19 @@
- from rest_framework import generics
- from .models import MenuItem
- from .serializers import DailySpecialSerializer
+from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .models import UserReview
+from .serializers import UserReviewSerializer
 
- class DailySpecialsListAPIView(generics.ListAPIView):
-     queryset = MenuItem.objects.filter(is_daily_special=True)
-         serializer_class = DailySpecialSerializer
-                                           
+class UserReviewCreateView(CreateAPIView):
+    serializer_class = UserReviewSerializer
+        permission_classes = [IsAuthenticatedOrReadOnly]
+
+            def perform_create(self, serializer):
+                    serializer.save(user=self.request.user)
+
+                    class MenuItemReviewsListView(ListAPIView):
+                        serializer_class = UserReviewSerializer
+
+                            def get_queryset(self):
+                                    menu_item_id = self.kwargs['menu_item_id']
+                                            return UserReview.objects.filter(menu_item_id=menu_item_id)
+                                            
