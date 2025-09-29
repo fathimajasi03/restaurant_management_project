@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import UpdateOrderStatusAPIView
+from .views import order_status
 
 urlpatterns = [
-    path('orders/<int:pk>/update-status/', UpdateOrderStatusAPIView.as_view(), name='update-order-status'),
+    path('orders/<int:order_id>/status/', order_status, name='order-status'),
     ]
     
