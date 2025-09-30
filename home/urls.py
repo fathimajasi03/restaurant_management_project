@@ -1,11 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import MenuCategoryViewSet
-
-router = DefaultRouter()
-router.register(r'menu-categories', MenuCategoryViewSet, basename='menu-category')
+from django.urls import path
+from .views import RestaurantDetailAPIView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('restaurants/<int:pk>/', RestaurantDetailAPIView.as_view(), name='restaurant-detail'),
     ]
     
