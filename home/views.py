@@ -1,8 +1,8 @@
-from rest_framework.generics import RetrieveAPIView
-from .models import Restaurant
-from .serializers import RestaurantSerializer
+from rest_framework import viewsets
+from .models import MenuCategory
+from .serializers import MenuCategorySerializer
 
-class RestaurantDetailAPIView(RetrieveAPIView):
-    queryset = Restaurant.objects.all()
-        serializer_class = RestaurantSerializer
+class MenuCategoryViewSet(viewsets.ModelViewSet):
+    queryset = MenuCategory.objects.all()
+        serializer_class = MenuCategorySerializer
         
