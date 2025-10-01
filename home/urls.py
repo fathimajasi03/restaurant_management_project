@@ -1,11 +1,6 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import MenuCategoryViewSet
-
-router = DefaultRouter()
-router.register(r'menu-categories', MenuCategoryViewSet, basename='menu-category')
+from django.urls import path
+from .views import update_menu_item_availability
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('menu-items/<int:pk>/availability/', update_menu_item_availability, name='update-menuitem-availability'),
     ]
-    
