@@ -1,30 +1,24 @@
-import logging
-from .models import Order
+def calculate_order_total(order_items):
+        """
+            Calculate the total price of an order.
 
-logger = logging.getLogger(__name__)
+                Args:
+                        order_items (list of dict): Each dict should have:
+                                    - 'quantity' (int or float): number of units ordered
+                                                - 'price' (int or float): price per unit
 
-def update_order_status(order_id, new_status):
-    """
-        Update the status of an order by its ID.
+                                                    Returns:
+                                                            float: total cost, sum of quantity * price for all items
 
-            Args:
-                    order_id (int): Primary key of the order to update.
-                            new_status (str): New status value.
-
-                                Returns:
-                                        tuple: (success, message)
-                                                    success (bool): True if updated, False otherwise.
-                                                                message (str): Info or error string.
+                                                                Handles empty order list gracefully by returning 0.0.
                                                                     """
-                                                                        try:
-                                                                                order = Order.objects.get(id=order_id)
-                                                                                    except Order.DoesNotExist:
-                                                                                            logger.error(f"Order with ID {order_id} not found.")
-                                                                                                    return False, "Order not found."
+                                                                        if not order_items:
+                                                                                return 0.0
 
-                                                                                                        old_status = order.status
-                                                                                                            order.status = new_status
-                                                                                                                order.save()
-                                                                                                                    logger.info(f"Order {order_id} status changed from {old_status} to {new_status}.")
-                                                                                                                        return True, f"Order status updated to {new_status}."
-                                                                                                                        
+                                                                                    total = 0.0
+                                                                                        for item in order_items:
+                                                                                                quantity = item.get('quantity', 0)
+                                                                                                        price = item.get('price', 0)
+                                                                                                                total += quantity * price
+
+                                                                                                                    return total                                                                                                                    
