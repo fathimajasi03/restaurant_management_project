@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import TableDetailView
+from .views import AvailableTablesAPIView
 
 urlpatterns = [
-    path('api/tables/<int:pk>/', TableDetailView.as_view(), name='table-detail'),
+    path('api/tables/available/', AvailableTablesAPIView.as_view(), name='available_tables_api'),
     ]
