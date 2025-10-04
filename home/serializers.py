@@ -1,8 +1,7 @@
 from rest_framework import serializers
-from .models import MenuItem
+from .models import Table
 
-class MenuItemAvailabilitySerializer(serializers.ModelSerializer):
+class TableSerializer(serializers.ModelSerializer):
     class Meta:
-            model = MenuItem
-                    fields = ['id', 'is_available']
-                            read_only_fields = ['id']
+            model = Table
+                    fields = ['table_number', 'capacity', 'is_available']
