@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import order_status
+from .views import CouponValidationView
 
 urlpatterns = [
-    path('orders/<int:order_id>/status/', order_status, name='order-status'),
+    path('coupons/validate/', CouponValidationView.as_view()),
     ]
-    
