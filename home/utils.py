@@ -1,35 +1,31 @@
-import logging
-from django.core.mail import send_mail
-from django.conf import settings
-from smtplib import SMTPException
+from datetime import datetime, time
 
-logger = logging.getLogger(__name__)
-
-def send_email(recipient_email, subject, message_body):
-    """
-        Send an email to the given recipient.
-
-            Args:
-                    recipient_email (str): The email address of the recipient.
-                            subject (str): The subject of the email.
-                                    message_body (str): The message body of the email.
-
-                                        Returns:
-                                                dict: Contains success status and message.
-                                                    """
-                                                        try:
-                                                                send_mail(
-                                                                            subject=subject,
-                                                                                        message=message_body,
-                                                                                                    from_email=settings.DEFAULT_FROM_EMAIL,
-                                                                                                                recipient_list=[recipient_email],
-                                                                                                                            fail_silently=False,
-                                                                                                                                    )
-                                                                                                                                            return {"success": True, "message": "Email sent successfully."}
-                                                                                                                                                except SMTPException as smtp_ex:
-                                                                                                                                                        logger.error(f"SMTP error when sending email to {recipient_email}: {smtp_ex}")
-                                                                                                                                                                return {"success": False, "message": "SMTP error occurred while sending the email."}
-                                                                                                                                                                    except Exception as ex:
-                                                                                                                                                                            logger.error(f"Error when sending email to {recipient_email}: {ex}")
-                                                                                                                                                                                    return {"success": False, "message": "An unexpected error occurred while sending the email."}
-                                                                                                                                                                                    
+def is_restaurant_open():
+    now = datetime.now()
+        current_weekday = now.weekday()  # Monday is 0, Sunday is 6
+            current_time = now.time()
+            
+                # Example: Open 9 AM to 10 PM Monday-Saturday, 10 AM to 8 PM Sunday
+                    if current_weekday == 6:  # Sunday
+                            open_time = time(10, 0)   # 10:00 AM
+                                    close_time = time(20, 0)  # 8:00 PM
+                                        else:  # Monday-Saturday
+                                                open_time = time(9, 0)    # 9:00 AM
+                                                        close_time = time(22, 0)  # 10:00 PM
+                                                        
+                                                            return open_time <= current_time < close_timefrom datetime import datetime, time
+                                                            
+                                                            def is_restaurant_open():
+                                                                now = datetime.now()
+                                                                    current_weekday = now.weekday()  # Monday is 0, Sunday is 6
+                                                                        current_time = now.time()
+                                                                        
+                                                                            # Example: Open 9 AM to 10 PM Monday-Saturday, 10 AM to 8 PM Sunday
+                                                                                if current_weekday == 6:  # Sunday
+                                                                                        open_time = time(10, 0)   # 10:00 AM
+                                                                                                close_time = time(20, 0)  # 8:00 PM
+                                                                                                    else:  # Monday-Saturday
+                                                                                                            open_time = time(9, 0)    # 9:00 AM
+                                                                                                                    close_time = time(22, 0)  # 10:00 PM
+                                                                                                                    
+                                                                                                                        return open_time <= current_time < close_time                fail_silently                                                                                                                                                                                
