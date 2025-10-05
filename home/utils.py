@@ -1,31 +1,20 @@
-from datetime import datetime, time
-
-def is_restaurant_open():
-    now = datetime.now()
-        current_weekday = now.weekday()  # Monday is 0, Sunday is 6
-            current_time = now.time()
-            
-                # Example: Open 9 AM to 10 PM Monday-Saturday, 10 AM to 8 PM Sunday
-                    if current_weekday == 6:  # Sunday
-                            open_time = time(10, 0)   # 10:00 AM
-                                    close_time = time(20, 0)  # 8:00 PM
-                                        else:  # Monday-Saturday
-                                                open_time = time(9, 0)    # 9:00 AM
-                                                        close_time = time(22, 0)  # 10:00 PM
-                                                        
-                                                            return open_time <= current_time < close_timefrom datetime import datetime, time
-                                                            
-                                                            def is_restaurant_open():
-                                                                now = datetime.now()
-                                                                    current_weekday = now.weekday()  # Monday is 0, Sunday is 6
-                                                                        current_time = now.time()
-                                                                        
-                                                                            # Example: Open 9 AM to 10 PM Monday-Saturday, 10 AM to 8 PM Sunday
-                                                                                if current_weekday == 6:  # Sunday
-                                                                                        open_time = time(10, 0)   # 10:00 AM
-                                                                                                close_time = time(20, 0)  # 8:00 PM
-                                                                                                    else:  # Monday-Saturday
-                                                                                                            open_time = time(9, 0)    # 9:00 AM
-                                                                                                                    close_time = time(22, 0)  # 10:00 PM
-                                                                                                                    
-                                                                                                                        return open_time <= current_time < close_time                fail_silently                                                                                                                                                                                
+ def calculate_discount(original_price, discount_percentage):
+        try:
+                # Convert inputs to float for calculation
+                        price = float(original_price)
+                                discount = float(discount_percentage)
+                                
+                                        # Validate values
+                                                if price < 0:
+                                                            raise ValueError("Original price cannot be negative")
+                                                                    if discount < 0 or discount > 1:
+                                                                                raise ValueError("Discount percentage must be between 0 and 1")
+                                                                                
+                                                                                        # Calculate discounted price
+                                                                                                discounted_price = price * (1 - discount)
+                                                                                                        # Ensure discounted_price is not negative due to discount logic
+                                                                                                                return max(discounted_price, 0)
+                                                                                                                        
+                                                                                                                            except (ValueError, TypeError) as e:
+                                                                                                                                    # Return error message or None to indicate failure
+                                                                                                                                            return f"Error: {str(e)}"             else:                     open_time = time(9, 0)
