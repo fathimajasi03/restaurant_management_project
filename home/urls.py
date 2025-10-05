@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import AvailableTablesAPIView
+from .views import ReviewCreateAPIView
 
 urlpatterns = [
-    path('api/tables/available/', AvailableTablesAPIView.as_view(), name='available_tables_api'),
+    path('api/reviews/', ReviewCreateAPIView.as_view(), name='create_review'),
     ]
