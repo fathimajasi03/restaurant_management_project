@@ -1,9 +1,12 @@
-from rest_framework import generics
-from .models import Table
-from .serializers import TableSerializer
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAuthenticated
+from .models import Review
+from .serializers import ReviewSerializer
 
-class AvailableTablesAPIView(generics.ListAPIView):
-    serializer_class = TableSerializer
+class ReviewCreateAPIView(CreateAPIView):
+    queryset = Review.objects.all()
+        serializer_class = ReviewSerializer
+            permission_classes = [IsAuthenticated]
 
-        def get_queryset(self):
-                return Table.objects.filter(is_available=True)
+                def perform_create(self, serializer):
+                        serializer.save(user=self.request.user)
