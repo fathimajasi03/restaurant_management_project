@@ -1,11 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
-        rating = models.PositiveSmallIntegerField()  # e.g., 1 to 5 stars
-            text = models.TextField(blank=True)
-                created_at = models.DateTimeField(auto_now_add=True)
+class MenuItem(models.Model):
+    name = models.CharField(max_length=100)
+        price = models.DecimalField(max_digits=8, decimal_places=2)
+            discount_percentage = models.DecimalField(
+                    max_digits=4, decimal_places=2, default=0.00,
+                            help_text="Discount as a decimal fraction, e.g. 0.10 for 10% off"
+                                )
+                                    # other relevant fields ...
 
-                    def __str__(self):
-                            return f"Review by {self.user.username} - Rating: {self.rating}"
+                                        def get_final_price(self):
+                                                discount = float(self.discount_percentage)
+                                                        original_price = float(self.price)
+                                                                final_price = original_price * (1 - discount)
+                                                                        return max(final_price, 0.0)
