@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView
-from .models import MenuCategory
-from .serializers import MenuCategorySerializer
+from .models import OpeningHours
+from .serializers import OpeningHoursSerializer
 
-class MenuCategoryListAPIView(ListAPIView):
-    queryset = MenuCategory.objects.all()
-        serializer_class = MenuCategorySerializer
+class OpeningHoursListAPIView(ListAPIView):
+    queryset = OpeningHours.objects.all().order_by('id')
+        serializer_class = OpeningHoursSerializer
