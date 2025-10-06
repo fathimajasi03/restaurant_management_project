@@ -1,4 +1,8 @@
 from django.db import models
-class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-        image = models.URLField(blank=True)
+
+class Restaurant(models.Model):
+    # existing fields ...
+
+        def get_total_menu_items(self):
+                from .models import MenuItem
+                        return MenuItem.objects.count()
