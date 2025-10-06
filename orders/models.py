@@ -1,11 +1,4 @@
-  from django.db import models
-  
-  class Coupon(models.Model):
-      code = models.CharField(max_length=64, unique=True)
-          discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
-              is_active = models.BooleanField(default=True)
-                  valid_from = models.DateField()
-                      valid_until = models.DateField()
-                      
-                          def __str__(self):
-                                  return self.code                                                                                                                                                                                                                      order = models.ForeignKey(Or                
+from django.db import models
+class Order(models.Model):
+    unique_id = models.CharField(max_length=16, unique=True)
+        status = models.CharField(max_length=20)
