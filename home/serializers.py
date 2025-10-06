@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import MenuCategory
+from .models import OpeningHours
 
-class MenuCategorySerializer(serializers.ModelSerializer):
+class OpeningHoursSerializer(serializers.ModelSerializer):
     class Meta:
-            model = MenuCategory
-                    fields = ['name']
+            model = OpeningHours
+                    fields = ['day', 'open_time', 'close_time']
