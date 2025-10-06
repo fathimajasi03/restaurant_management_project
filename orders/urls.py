@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import CouponValidationView
-
+from .views import OrderStatusAPIView
 urlpatterns = [
-    path('coupons/validate/', CouponValidationView.as_view()),
+    path('api/orders/<str:unique_id>/status/', OrderStatusAPIView.as_view())
     ]
