@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import OpeningHoursListAPIView
-
+from .views import MenuItemSearchAPIView
 urlpatterns = [
-    path('api/opening-hours/', OpeningHoursListAPIView.as_view(), name='opening_hours_list'),
+    path('api/menu-items/search/', MenuItemSearchAPIView.as_view(), name='menu_item_search'),
     ]
