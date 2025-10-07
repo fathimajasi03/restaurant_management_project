@@ -1,8 +1,19 @@
-from datetime import date
-from django.db.models import Sum
-from .models import Order
+def calculate_discount_amount(order_total, discount_percentage):
+        """
+            Calculate discount amount from order total and discount percentage.
 
-def get_daily_sales_total(date: date):
-    orders = Order.objects.filter(created_at__date=date)
-        total_sum = orders.aggregate(total_sum=Sum('total_price'))['total_sum']
-            return total_sum or 0
+                Args:
+                      order_total (float or int): The total order amount.
+                            discount_percentage (float or int): The discount percentage (0-100).
+
+                                Returns:
+                                      float: The discount amount, or 0 if inputs are invalid.
+                                          """
+                                              try:
+                                                      total = float(order_total)
+                                                              discount = float(discount_percentage)
+                                                                      if total < 0 or discount < 0 or discount > 100:
+                                                                                  return 0
+                                                                                          return total * (discount / 100)
+                                                                                              except (ValueError, TypeError):
+                                                                                                      return 0
