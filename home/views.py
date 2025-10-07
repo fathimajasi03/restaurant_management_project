@@ -1,10 +1,9 @@
-from rest_framework.generics import ListAPIView
-from .models import MenuItem
-from .serializers import MenuItemSearchSerializer
-class MenuItemSearchAPIView(ListAPIView):
-    serializer_class = MenuItemSearchSerializer
-        def get_queryset(self):
-                query = self.request.GET.get('q')
-                        if query:
-                                    return MenuItem.objects.filter(name__icontains=query)
-                                            return MenuItem.objects.none()
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Restaurant
+
+class RestaurantOpeningHoursAPIView(APIView):
+    def get(self, request):
+            restaurant = Restaurant.objects.first()
+                    opening_hours = restaurant.opening_hours if restaurant else "Not available"
+                            return Response({"opening_hours": opening_hours})
