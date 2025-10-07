@@ -1,5 +1,8 @@
 from django.db import models
-
-class Restaurant(models.Model):
-    # existing fields ...
-        opening_hours = models.CharField(max_length=50, default="11:00 AM - 11:00 PM (EST)")
+class MenuCategory(models.Model):
+    name = models.CharField(max_length=100)
+    class MenuItem(models.Model):
+        name = models.CharField(max_length=100)
+            price = models.DecimalField(max_digits=8,decimal_places=2)
+                description = models.TextField()
+                    category = models.ForeignKey(MenuCategory,on_delete=models.CASCADE)
