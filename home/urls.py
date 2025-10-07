@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import MenuItemPriceRangeAPIView
-
+from .views import MenuItemDetailAPIView
 urlpatterns = [
-    path('api/menu-items/price-range/', MenuItemPriceRangeAPIView.as_view())
+    path('api/menu-items/<int:pk>/', MenuItemDetailAPIView.as_view())
     ]
