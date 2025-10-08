@@ -1,6 +1,13 @@
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .models import MenuItem
-from .serializers import MenuItemDetailSerializer
-class MenuItemDetailAPIView(RetrieveAPIView):
-    queryset = MenuItem.objects.all()
-        serializer_class = MenuItemDetailSerializer
+
+class MenuItemAvailabilityAPIView(APIView):
+    def get(self, request, pk):
+            try:
+                        menu_item = MenuItem.objects.get(pk=pk)
+                                except MenuItem.DoesNotExist:
+                                            return Response({'error': 'Menu item not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+                                                    return Response({'available': menu_item.is_available})
