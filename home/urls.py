@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import MenuItemAvailabilityAPIView
+from .views import ReviewListAPIView
 
 urlpatterns = [
-    path('menu-items/<int:pk>/availability/', MenuItemAvailabilityAPIView.as_view(), name='menuitem-availability'),
+    path('reviews/', ReviewListAPIView.as_view(), name='review-list'),
     ]
