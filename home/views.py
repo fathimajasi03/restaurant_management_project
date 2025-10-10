@@ -1,9 +1,25 @@
 from rest_framework.generics import ListAPIView
-from .models import MenuItem
-from .serializers import MenuItemSerializer
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework import status
+from .models import FAQ
+from .serializers import FAQSerializer
 
-class AvailableMenuItemsAPIView(ListAPIView):
-    serializer_class = MenuItemSerializer
+class FAQPagination(PageNumberPagination):
+    page_size = 10
+        page_size_query_param = 'page_size'
+            max_page_size = 50
 
-        def get_queryset(self):
-                return MenuItem.objects.filter(available=True)
+            class FAQListAPIView(ListAPIView):
+                queryset = FAQ.objects.all().order_by('id')
+                    serializer_class = FAQSerializer
+                        pagination_class = FAQPagination
+
+                            def list(self, request, *args, **kwargs):
+                                    try:
+                                                return super().list(request, *args, **kwargs)
+                                                        except Exception:
+                                                                    return Response(
+                                                                                    {"error": "An error occurred while retrieving FAQs."},
+                                                                                                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                                                                                                                )
