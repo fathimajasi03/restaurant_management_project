@@ -1,9 +1,8 @@
 from django.db import models
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=255)
-        price = models.DecimalField(max_digits=8, decimal_places=2)
-            available = models.BooleanField(default=True)  # Availability field
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+        answer = models.TextField()
 
-                def __str__(self):
-                        return self.name
+            def __str__(self):
+                    return self.question
