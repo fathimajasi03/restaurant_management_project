@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import MenuItem
+from .models import FAQ
 
-class MenuItemSerializer(serializers.ModelSerializer):
+class FAQSerializer(serializers.ModelSerializer):
     class Meta:
-            model = MenuItem
-                    fields = ['id', 'name', 'price', 'available']
+            model = FAQ
+                    fields = ['id', 'question', 'answer']
