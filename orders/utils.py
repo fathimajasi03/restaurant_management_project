@@ -1,17 +1,17 @@
-def calculate_average_rating(reviews_queryset):
+Args:
+    reviews_queryset (QuerySet): A Django QuerySet containing review objects with a numeric 'rating' field.
+
+    Returns:
+        float: The average rating, or 0.0 if there are no reviews or if input is invalid.
         """
-            Calculate the average rating from a queryset of reviews.
+        try:
+            total_reviews = reviews_queryset.count()
+                if total_reviews == 0:
+                        return 0.0
 
-                Args:
-                        reviews_queryset (QuerySet): Django queryset containing reviews with a 'rating' field.
-
-                            Returns:
-                                    float: average rating, or 0.0 if no reviews available.
-                                        """
-                                            total_reviews = reviews_queryset.count()
-                                                if total_reviews == 0:
-                                                        return 0.0
-
-                                                            total_rating = reviews_queryset.aggregate(total=models.Sum('rating'))['total'] or 0
-                                                                average = total_rating / total_reviews
-                                                                    return float(average)                                                      
+                            # Sum all ratings efficiently; assumes 'rating' is numeric
+                                total_rating = reviews_queryset.aggregate(total_sum=models.Sum('rating'))['total_sum'] or 0
+                                    return float(total_rating) / float(total_reviews)
+                                    except Exception:
+                                        # Graceful fallback for unexpected input
+                                            return 0.0 
