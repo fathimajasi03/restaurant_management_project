@@ -1,16 +1,13 @@
 from django.db import models
 
-class Order(models.Model):
-    # ... your other fields ...
-        status = models.CharField(max_length=20)
-            total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-                # e.g., status choices: 'pending', 'completed', etc.
+class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+        cuisine = models.CharField(max_length=100)
+            # other fields ...
 
-                    @classmethod
-                        def calculate_total_revenue(cls):
-                                """
-                                        Aggregate and return total revenue from all completed orders.
-                                                """
-                                                        return cls.objects.filter(status='completed').aggregate(
-                                                                    total_revenue=models.Sum('total_amount')
-                                                                            )['total_revenue'] or 0
+                @classmethod
+                    def get_items_by_cuisine(cls, cuisine_type):
+                            """
+                                    Returns a QuerySet of MenuItem objects filtered by the given cuisine_type.
+                                            """
+                                                    return cls.objects.filter(cuisine=cuisine_type)
