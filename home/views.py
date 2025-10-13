@@ -1,25 +1,16 @@
-from rest_framework.generics import ListAPIView
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import FAQ
-from .serializers import FAQSerializer
+from .models import MenuItem
 
-class FAQPagination(PageNumberPagination):
-    page_size = 10
-        page_size_query_param = 'page_size'
-            max_page_size = 50
-
-            class FAQListAPIView(ListAPIView):
-                queryset = FAQ.objects.all().order_by('id')
-                    serializer_class = FAQSerializer
-                        pagination_class = FAQPagination
-
-                            def list(self, request, *args, **kwargs):
-                                    try:
-                                                return super().list(request, *args, **kwargs)
-                                                        except Exception:
+class AvailableMenuItemCountAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+            try:
+                        total_available = MenuItem.objects.filter(is_available=True).count()
+                                    return Response({"total_menu_items": total_available}, status=status.HTTP_200_OK)
+                                            except Exception:
+                                                        # Optional: log the exception here
                                                                     return Response(
-                                                                                    {"error": "An error occurred while retrieving FAQs."},
+                                                                                    {"error": "Could not retrieve menu item count."},
                                                                                                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                                                                                                 )
