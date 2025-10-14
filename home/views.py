@@ -1,17 +1,7 @@
-from rest_framework import viewsets
-from rest_framework import filters
-from .models import MenuItem
-from .serializers import MenuItemSerializer
+from rest_framework.generics import ListAPIView
+from .models import UserReview
+from .serializers import ReviewSerializer
 
-class MenuItemViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = MenuItem.objects.all()
-        serializer_class = MenuItemSerializer
-            filter_backends = [filters.SearchFilter]
-                search_fields = ['category']  # Enables ?search=CategoryName
-
-                    def get_queryset(self):
-                            queryset = super().get_queryset()
-                                    category = self.request.query_params.get('category')
-                                            if category:
-                                                        queryset = queryset.filter(category=category)
-                                                                return queryset
+class ReviewListAPIView(ListAPIView):
+    queryset = UserReview.objects.all().order_by('-created_at')  # Optional ordering newest first
+        serializer_class = ReviewSerializer
