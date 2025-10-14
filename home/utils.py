@@ -1,23 +1,22 @@
-import re
+def calculate_discount(price, discount_percentage):
+        """
+            Returns the discounted price given the original price and a discount percentage.
 
-def format_phone_number(phone_str):
-    """
-        Format a phone number string as (XXX) XXX-XXXX.
-            Handles numbers with or without country code.
-                Returns cleaned/standardized string, or the input if invalid.
-                    """
-                        try:
-                                # Remove non-digit characters
-                                        digits = re.sub(r'D', '', phone_str)
+                Args:
+                        price (float/int): The original price of the item.
+                                discount_percentage (float/int): The discount percentage (e.g., 10 for 10%).
 
-                                                # Remove leading '1' (US country code), if present
-                                                        if len(digits) == 11 and digits.startswith('1'):
-                                                                    digits = digits[1:]
-
-                                                                            if len(digits) != 10:
-                                                                                        raise ValueError('Phone number must have 10 digits.')
-
-                                                                                                return f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
-                                                                                                    except Exception as e:
-                                                                                                            # Handle invalid input by returning the input as-is or a default string
-                                                                                                                    return phone_str  # Or: f"Invalid: {phone_str}"
+                                    Returns:
+                                            float: The discounted price, rounded to 2 decimals.
+                                                    If inputs are invalid, returns the original price (no discount).
+                                                        """
+                                                            try:
+                                                                    price = float(price)
+                                                                            discount_percentage = float(discount_percentage)
+                                                                                    if price < 0 or discount_percentage < 0 or discount_percentage > 100:
+                                                                                                raise ValueError("Price and discount must be non-negative, discount no more than 100%.")
+                                                                                                        discount_amount = price * (discount_percentage / 100)
+                                                                                                                return round(price - discount_amount, 2)
+                                                                                                                    except (ValueError, TypeError):
+                                                                                                                            # Handle invalid input gracefully
+                                                                                                                                    return float(price) if isinstance(price, (int, float)) else 0.0
