@@ -1,9 +1,9 @@
 from django.db import models
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=255)
-        price = models.DecimalField(max_digits=8, decimal_places=2)
+class Table(models.Model):
+    table_number = models.IntegerField(unique=True)
+        capacity = models.IntegerField()
             is_available = models.BooleanField(default=True)
 
                 def __str__(self):
-                        return self.name
+                        return f"Table {self.table_number} (Capacity: {self.capacity})
