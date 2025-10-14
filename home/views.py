@@ -1,16 +1,17 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import viewsets
+from rest_framework import filters
 from .models import MenuItem
+from .serializers import MenuItemSerializer
 
-class AvailableMenuItemCountAPIView(APIView):
-    def get(self, request, *args, **kwargs):
-            try:
-                        total_available = MenuItem.objects.filter(is_available=True).count()
-                                    return Response({"total_menu_items": total_available}, status=status.HTTP_200_OK)
-                                            except Exception:
-                                                        # Optional: log the exception here
-                                                                    return Response(
-                                                                                    {"error": "Could not retrieve menu item count."},
-                                                                                                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                                                                                                                )
+class MenuItemViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MenuItem.objects.all()
+        serializer_class = MenuItemSerializer
+            filter_backends = [filters.SearchFilter]
+                search_fields = ['category']  # Enables ?search=CategoryName
+
+                    def get_queryset(self):
+                            queryset = super().get_queryset()
+                                    category = self.request.query_params.get('category')
+                                            if category:
+                                                        queryset = queryset.filter(category=category)
+                                                                return queryset
