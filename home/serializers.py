@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from .models import MenuItem
+from .models import UserReview  # Change if your model name differs
 
-class MenuItemSerializer(serializers.ModelSerializer):
-    class Meta:
-            model = MenuItem
-                    fields = ['id', 'name', 'description', 'price', 'category']
+class ReviewSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.username')  # Assuming a foreign key to User model
+
+        class Meta:
+                model = UserReview
+                        fields = ['user_name', 'rating', 'comment']
