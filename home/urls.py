@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import AvailableMenuItemCountAPIView
+from rest_framework.routers import DefaultRouter
+from .views import MenuItemViewSet
 
-urlpatterns = [
-    path('menu-items/available/count/', AvailableMenuItemCountAPIView.as_view(), name='available-menu-items-count'),
-    ]
+router = DefaultRouter()
+router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
+
+urlpatterns = router.urls
