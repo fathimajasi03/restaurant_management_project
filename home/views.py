@@ -1,7 +1,14 @@
-from rest_framework.generics import ListAPIView
-from .models import UserReview
-from .serializers import ReviewSerializer
+from rest_framework import viewsets
+from .models import MenuCategory
+from rest_framework import serializers
 
-class ReviewListAPIView(ListAPIView):
-    queryset = UserReview.objects.all().order_by('-created_at')  # Optional ordering newest first
-        serializer_class = ReviewSerializer
+# Serializer (inline or in serializers.py)
+class MenuCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+            model = MenuCategory
+                    fields = ['id', 'name']
+
+                    # ViewSet for listing categories
+                    class MenuCategoryViewSet(viewsets.ReadOnlyModelViewSet):
+                        queryset = MenuCategory.objects.all()
+                            serializer_class = MenuCategorySerializer
