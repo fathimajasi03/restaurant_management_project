@@ -1,22 +1,18 @@
-def calculate_discount(price, discount_percentage):
-        """
-            Returns the discounted price given the original price and a discount percentage.
+from datetime import datetime, time
 
-                Args:
-                        price (float/int): The original price of the item.
-                                discount_percentage (float/int): The discount percentage (e.g., 10 for 10%).
+def is_restaurant_open():
+    """
+        Returns True if the restaurant is open (Mon-Fri, 9:00 AM to 10:00 PM), else False.
+            """
+                now = datetime.now()  # Use timezone-aware datetimes if your project uses them
+                    weekday = now.weekday()  # Monday is 0, Sunday is 6
 
-                                    Returns:
-                                            float: The discounted price, rounded to 2 decimals.
-                                                    If inputs are invalid, returns the original price (no discount).
-                                                        """
-                                                            try:
-                                                                    price = float(price)
-                                                                            discount_percentage = float(discount_percentage)
-                                                                                    if price < 0 or discount_percentage < 0 or discount_percentage > 100:
-                                                                                                raise ValueError("Price and discount must be non-negative, discount no more than 100%.")
-                                                                                                        discount_amount = price * (discount_percentage / 100)
-                                                                                                                return round(price - discount_amount, 2)
-                                                                                                                    except (ValueError, TypeError):
-                                                                                                                            # Handle invalid input gracefully
-                                                                                                                                    return float(price) if isinstance(price, (int, float)) else 0.0
+                        # Define operating days (Monday to Friday) and hours
+                            operating_days = range(0, 5)  # 0-4 are Monday to Friday
+                                opening_time = time(hour=9, minute=0)
+                                    closing_time = time(hour=22, minute=0)  # 10 PM
+
+                                        if weekday in operating_days:
+                                                if opening_time <= now.time() < closing_time:
+                                                            return True
+                                                                return False
