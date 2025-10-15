@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import ReviewListAPIView
+from rest_framework.routers import DefaultRouter
+from .views import MenuCategoryViewSet
 
-urlpatterns = [
-    path('reviews/', ReviewListAPIView.as_view(), name='review-list'),
-    ]
+router = DefaultRouter()
+router.register(r'categories', MenuCategoryViewSet, basename='menucategory')
+
+urlpatterns = router.urls
