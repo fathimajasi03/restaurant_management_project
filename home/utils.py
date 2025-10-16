@@ -1,18 +1,13 @@
-from datetime import datetime, time
+from home.models import Table
 
-def is_restaurant_open():
+def get_available_tables_by_capacity(num_guests):
     """
-        Returns True if the restaurant is open (Mon-Fri, 9:00 AM to 10:00 PM), else False.
-            """
-                now = datetime.now()  # Use timezone-aware datetimes if your project uses them
-                    weekday = now.weekday()  # Monday is 0, Sunday is 6
+        Returns a QuerySet of available tables that can accommodate at least `num_guests` people.
 
-                        # Define operating days (Monday to Friday) and hours
-                            operating_days = range(0, 5)  # 0-4 are Monday to Friday
-                                opening_time = time(hour=9, minute=0)
-                                    closing_time = time(hour=22, minute=0)  # 10 PM
+            Args:
+                    num_guests (int): The number of guests needing seating.
 
-                                        if weekday in operating_days:
-                                                if opening_time <= now.time() < closing_time:
-                                                            return True
-                                                                return False
+                        Returns:
+                                QuerySet: Table objects where is_available is True and capacity >= num_guests.
+                                    """
+                                        return Table.objects.filter(is_available=True, capacity__gte=num_guests)
