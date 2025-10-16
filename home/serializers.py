@@ -1,9 +1,7 @@
 from rest_framework import serializers
-from .models import UserReview  # Change if your model name differs
+from .models import Table
 
-class ReviewSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(source='user.username')  # Assuming a foreign key to User model
-
-        class Meta:
-                model = UserReview
-                        fields = ['user_name', 'rating', 'comment']
+class TableSerializer(serializers.ModelSerializer):
+    class Meta:
+            model = Table
+                    fields = '__all__'  # Include all fields (table_number, capacity, is_available, etc.)
