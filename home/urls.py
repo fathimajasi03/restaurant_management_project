@@ -1,7 +1,6 @@
-from rest_framework.routers import DefaultRouter
-from .views import MenuCategoryViewSet
+from django.urls import path
+from .views import TableListAPIView
 
-router = DefaultRouter()
-router.register(r'categories', MenuCategoryViewSet, basename='menucategory')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('api/tables/', TableListAPIView.as_view(), name='table-list'),
+    ]
