@@ -1,14 +1,10 @@
-from rest_framework import viewsets
-from .models import MenuCategory
-from rest_framework import serializers
+from rest_framework.generics import ListAPIView
+from .models import Table
+from .serializers import TableSerializer
 
-# Serializer (inline or in serializers.py)
-class MenuCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-            model = MenuCategory
-                    fields = ['id', 'name']
-
-                    # ViewSet for listing categories
-                    class MenuCategoryViewSet(viewsets.ReadOnlyModelViewSet):
-                        queryset = MenuCategory.objects.all()
-                            serializer_class = MenuCategorySerializer
+class TableListAPIView(ListAPIView):
+    """
+        API endpoint that lists all available tables.
+            """
+                queryset = Table.objects.filter(is_available=True)
+                    serializer_class = TableSerializer
