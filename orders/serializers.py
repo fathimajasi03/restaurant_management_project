@@ -1,13 +1,7 @@
 from rest_framework import serializers
-from .models import Order
+from .models import Table
 
-class OrderStatusUpdateSerializer(serializers.ModelSerializer):
+class TableSerializer(serializers.ModelSerializer):
     class Meta:
-            model = Order
-                    fields = ['status']
-
-                        def validate_status(self, value):
-                                valid_statuses = [choice[0] for choice in Order.STATUS_CHOICES]
-                                        if value not in valid_statuses:
-                                                    raise serializers.ValidationError(f"Status '{value}' is not valid.")
-                                                            return value
+            model = Table
+                    fields = '__all__'
