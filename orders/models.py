@@ -1,19 +1,11 @@
 from django.db import models
 
-class Order(models.Model):
-    # Your existing Order fields
-        pass
+class Discount(models.Model):
+    code = models.CharField(max_length=50, unique=True)
+        percentage = models.DecimalField(max_digits=5, decimal_places=2)  # e.g., 0.10 for 10%
+            start_date = models.DateField()
+                end_date = models.DateField()
+                    is_active = models.BooleanField(default=True)
 
-        class MenuItem(models.Model):
-            # Your existing MenuItem fields
-                name = models.CharField(max_length=100)
-                    # etc.
-
-                    class OrderItem(models.Model):
-                        order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-                            menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-                                quantity = models.IntegerField(default=1)
-                                    price_at_time_of_order = models.DecimalField(max_digits=8, decimal_places=2)
-
-                                        def __str__(self):
-                                                return f"{self.quantity} x {self.menu_item.name}"
+                        def __str__(self):
+                                return f"{self.code} ({self.percentage * 100}% off)"
