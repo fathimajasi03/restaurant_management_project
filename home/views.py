@@ -1,7 +1,7 @@
-from rest_framework import generics
+from rest_framework.generics import ListAPIView
 from .models import Cuisine
 from .serializers import CuisineSerializer
 
-class CuisineListView(generics.ListAPIView):
+class CuisineListView(ListAPIView):
     queryset = Cuisine.objects.all()
         serializer_class = CuisineSerializer
