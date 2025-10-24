@@ -1,26 +1,26 @@
 from django.db import models
-from django.utils import timezone
+from django.db.models import Count
 
-# Assuming your menu model is called MenuItem. 
-# If it's RestaurantMenu, change MenuItem to RestaurantMenu where relevant.
+class MenuItemManager(models.Manager):
+    def get_top_selling_items(self, num_items=5):
+            return (
+                        self.get_queryset()
+                                    .annotate(order_count=Count('order_items'))  # 'order_items' should be the related_name from OrderItem to MenuItem
+                                                .order_by('-order_count')[:num_items]
+                                                        )
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-        # ... other fields ...
+                                                        class MenuItem(models.Model):
+                                                            name = models.CharField(max_length=100)
+                                                                # other fields...
 
-            def is_daily_special(self):
-                    today = timezone.localdate()
-                            return DailySpecial.objects.filter(menu_item=self, date=today).exists()
+                                                                    objects = models.Manager()        # Default manager
+                                                                        top_selling = MenuItemManager()   # Custom manager for top-selling items
 
-                                def __str__(self):
-                                        return self.name
+                                                                        class OrderItem(models.Model):
+                                                                            menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='order_items')
+                                                                                order = models.ForeignKey('Order', on_delete=models.CASCADE)
+                                                                                    quantity = models.IntegerField(default=1)
+                                                                                        price_at_time_of_order = models.DecimalField(max_digits=8, decimal_places=2)
 
-                                        class DailySpecial(models.Model):
-                                            menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-                                                date = models.DateField()
-
-                                                    class Meta:
-                                                            unique_together = (('menu_item', 'date'),)
-
-                                                                def __str__(self):
-                                                                        return f"Special: {self.menu_item} on {self.date}"
+                                                                                            def __str__(self):
+                                                                                                    return f"{self.quantity} x {self.menu_item.name}"
