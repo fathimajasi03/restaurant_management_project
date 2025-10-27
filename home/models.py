@@ -1,9 +1,13 @@
 from django.db import models
 
 class MenuItem(models.Model):
-    name = models.CharField(max_length=100)
-        # other existing fields...
-            is_featured = models.BooleanField(default=False)  # new field to highlight featured dishes
+    # existing fields ...
+        name = models.CharField(max_length=100)
+            # Add this new field:
+                is_featured = models.BooleanField(
+                        default=False,
+                                help_text="Designates whether this menu item is featured"
+                                    )
 
-                def __str__(self):
-                        return self.name
+                                        def __str__(self):
+                                                return self.name
