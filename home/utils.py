@@ -1,13 +1,13 @@
-from home.models import Table
+# home/utils.py
 
-def get_available_tables_by_capacity(num_guests):
+from home.models import MenuItem, Cuisine
+
+def get_distinct_cuisines():
     """
-        Returns a QuerySet of available tables that can accommodate at least `num_guests` people.
+        Retrieve a list of all unique cuisine names available in the menu items.
 
-            Args:
-                    num_guests (int): The number of guests needing seating.
-
-                        Returns:
-                                QuerySet: Table objects where is_available is True and capacity >= num_guests.
-                                    """
-                                        return Table.objects.filter(is_available=True, capacity__gte=num_guests)
+            Returns:
+                    list[str]: A list of unique cuisine names.
+                        """
+                            cuisine_names = MenuItem.objects.values_list('cuisine__name', flat=True).distinct()
+                                return list(cuisine_names)
