@@ -1,9 +1,10 @@
-from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .models import MenuItem
-from .serializers import FeaturedMenuItemSerializer
+from .serializers import MenuItemSerializer
 
-class FeaturedMenuItemsListView(generics.ListAPIView):
-    serializer_class = FeaturedMenuItemSerializer
-
-        def get_queryset(self):
-                return MenuItem.objects.filter(is_featured=True)
+class FeaturedMenuItemsAPIView(APIView):
+    def get(self, request, format=None):
+            featured_items = MenuItem.objects.filter(is_featured=True)
+                    serializer = MenuItemSerializer(featured_items, many=True)
+                            return Response(serializer.data)
