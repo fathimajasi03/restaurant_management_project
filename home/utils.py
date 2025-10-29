@@ -1,18 +1,18 @@
-# home/utils.py
+import datetime
+from home.models import DailyOperatingHours
 
-def estimate_table_turnover_time(table_capacity):
+def get_today_operating_hours():
     """
-        Estimate dining duration for a table in minutes based on its seating capacity.
+        Returns a tuple of (open_time, close_time) for today's operating hours.
+            If no entry is found for today, returns (None, None).
+                """
+                    # Get current day name, e.g., 'Monday'
+                        today_name = datetime.datetime.today().strftime('%A')
 
-            Args:
-                    table_capacity (int): Number of seats at the table.
-
-                        Returns:
-                                int: Estimated turnover time in minutes.
-                                    """
-                                        if table_capacity <= 2:
-                                                return 60
-                                                    elif table_capacity <= 4:
-                                                            return 90
-                                                                else:
-                                                                        return 120
+                            try:
+                                    # Assuming 'day' is a CharField on DailyOperatingHours with full day names (e.g., 'Monday')
+                                            hours = DailyOperatingHours.objects.get(day=today_name)
+                                                    return (hours.open_time, hours.close_time)
+                                                        except DailyOperatingHours.DoesNotExist:
+                                                                # No entry means closed or not set
+                                                                        return (None, None)
