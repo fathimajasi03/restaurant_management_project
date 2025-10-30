@@ -1,8 +1,11 @@
 from django.db import models
 
-class Ingredient(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-        unit_of_measure = models.CharField(max_length=50)
+class NutritionalInformation(models.Model):
+    menu_item = models.ForeignKey('MenuItem', on_delete=models.CASCADE)
+        calories = models.IntegerField()
+            protein_grams = models.DecimalField(max_digits=5, decimal_places=2)
+                fat_grams = models.DecimalField(max_digits=5, decimal_places=2)
+                    carbohydrate_grams = models.DecimalField(max_digits=5, decimal_places=2)
 
-            def __str__(self):
-                    return self.name
+                        def __str__(self):
+                                return f"Nutritional Info for {self.menu_item.name}: {self.calories} kcal"
