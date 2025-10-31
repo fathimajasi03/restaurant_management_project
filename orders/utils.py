@@ -1,15 +1,19 @@
-# orders/utils.py
+import re
 
-def calculate_tip_amount(order_total, tip_percentage):
+def is_valid_phone_number(phone_number):
     """
-        Calculate the tip amount based on the order total and tip percentage.
+        Validate a phone number string against a basic pattern.
             
-                Args:
-                        order_total (float or Decimal): The total bill amount before the tip.
-                                tip_percentage (int): The tip percentage to apply (e.g., 15 for 15%).
-                                    
-                                        Returns:
-                                                float: The tip amount rounded to two decimal places.
-                                                    """
-                                                        tip_amount = order_total * (tip_percentage / 100)
-                                                            return round(tip_amount, 2)
+                Allows:
+                    - 10 to 12 digits total
+                        - Optional country code prefix starting with '+'
+                            - Spaces or hyphens as separators
+                                
+                                    Args:
+                                            phone_number (str): The phone number to validate
+                                                
+                                                    Returns:
+                                                            bool: True if the phone number matches the pattern, False otherwise
+                                                                """
+                                                                    pattern = re.compile(r'^(+?d{1,3}[- ]?)?(d{3}[- ]?d{3}[- ]?d{4})$')
+                                                                        return bool(pattern.match(phone_number))
