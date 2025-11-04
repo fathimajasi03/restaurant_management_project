@@ -1,5 +1,10 @@
 from django.db import models
 
-class Restaurant(models.Model):
-    # ... existing fields ...
-        has_delivery = models.BooleanField(default=False, help_text="Does the restaurant offer delivery services?")
+class LoyaltyProgram(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+        points_required = models.IntegerField(unique=True)
+            discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+                description = models.TextField()
+
+                    def __str__(self):
+                            return f"{self.name} ({self.discount_percentage}% off)"
