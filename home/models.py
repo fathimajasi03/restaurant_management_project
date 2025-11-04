@@ -1,10 +1,15 @@
+import datetime
 from django.db import models
 
-class LoyaltyProgram(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-        points_required = models.IntegerField(unique=True)
-            discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
-                description = models.TextField()
+class UpcomingSpecialsManager(models.Manager):
+    def upcoming(self):
+            today = datetime.date.today()
+                    return self.filter(date__gte=today)
 
-                    def __str__(self):
-                            return f"{self.name} ({self.discount_percentage}% off)"
+                    class DailySpecial(models.Model):
+                        # ... your other fields ...
+                            date = models.DateField()
+                                # Attach the custom manager
+                                    objects = UpcomingSpecialsManager()
+                                        # Optionally, keep the default manager as well:
+                                            # all_objects = models.Manager()
