@@ -1,10 +1,7 @@
-from rest_framework.routers import DefaultRouter
-from .views import IngredientViewSet
-from django.urls import path, include
-
-router = DefaultRouter()
-router.register(r'ingredients', IngredientViewSet)
+from django.urls import path
+from .views import menuitem_list_create, menuitem_detail
 
 urlpatterns = [
-    path('api/', include(router.urls)),
-    ]0
+    path('menu-items/', menuitem_list_create, name='menuitem-list-create'),
+        path('menu-items/<int:pk>/', menuitem_detail, name='menuitem-detail'),
+        ]
