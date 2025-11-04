@@ -1,11 +1,14 @@
-from django.db import models
-
-class Discount(models.Model):
-    code = models.CharField(max_length=50, unique=True)
-        percentage = models.DecimalField(max_digits=5, decimal_places=2)  # e.g., 0.10 for 10%
-            start_date = models.DateField()
-                end_date = models.DateField()
-                    is_active = models.BooleanField(default=True)
-
-                        def __str__(self):
-                                return f"{self.code} ({self.percentage * 100}% off)"
+class Order(models.Model):
+        # ...existing fields...
+        
+            def get_unique_item_names(self):
+                    """
+                            Gather all unique menu item names for this order.
+                                    Returns:
+                                                List of unique menu item names (list of str).
+                                                        """
+                                                                item_names = {
+                                                                            order_item.menu_item.name
+                                                                                        for order_item in self.orderitem_set.all()
+                                                                                                }
+                                                                                                        return list(item_names)                                                                                                                                                                          order = models.Fore         
