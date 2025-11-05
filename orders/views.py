@@ -1,7 +1,10 @@
-from rest_framework import generics
-from .models import Table
-from .serializers import TableSerializer
+from rest_framework.generics import ListAPIView
+from .models import PaymentMethod
+from .serializers import PaymentMethodSerializer
 
-class TableListView(generics.ListAPIView):
-    queryset = Table.objects.all()
-        serializer_class = TableSerializer
+class PaymentMethodListAPIView(ListAPIView):
+    serializer_class = PaymentMethodSerializer
+
+        def get_queryset(self):
+                # Only return active payment methods
+                        return PaymentMethod.objects.filter(is_active=True)
