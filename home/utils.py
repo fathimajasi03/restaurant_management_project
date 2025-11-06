@@ -1,18 +1,19 @@
-import datetime
-from home.models import DailyOperatingHours
+from datetime import datetime
 
-def get_today_operating_hours():
+def format_datetime(dt):
     """
-        Returns a tuple of (open_time, close_time) for today's operating hours.
-            If no entry is found for today, returns (None, None).
-                """
-                    # Get current day name, e.g., 'Monday'
-                        today_name = datetime.datetime.today().strftime('%A')
-
-                            try:
-                                    # Assuming 'day' is a CharField on DailyOperatingHours with full day names (e.g., 'Monday')
-                                            hours = DailyOperatingHours.objects.get(day=today_name)
-                                                    return (hours.open_time, hours.close_time)
-                                                        except DailyOperatingHours.DoesNotExist:
-                                                                # No entry means closed or not set
-                                                                        return (None, None)
+        Format a datetime object into a readable string like:
+            'January 1, 2023 at 10:30 AM'.
+                
+                    If dt is None, returns an empty string.
+                        
+                            Args:
+                                    dt (datetime or None): The datetime object to format.
+                                        
+                                            Returns:
+                                                    str: Formatted datetime string or empty string if dt is None.
+                                                        """
+                                                            if dt is None:
+                                                                    return ""
+                                                                        # Format datetime using strftime with full month name, day, year, and 12-hour time with AM/PM
+                                                                            return dt.strftime("%B %-d, %Y at %-I:%M %p")
