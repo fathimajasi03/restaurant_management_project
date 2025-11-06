@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from .models import Ingredient
+from .models import Restaurant, DailyOperatingHours
 
-class IngredientSerializer(serializers.ModelSerializer):
-    class Meta:
-            model = Ingredient
-                    fields = ['id', 'name', 'unit_of_measure']
+class RestaurantSerializer(serializers.ModelSerializer):
+    daily_operating_hours = DailyOperatingHoursSerializer(many=True, read_only=True)
+
+        class Meta:
+                model = Restaurant
+                        fields = ['id', 'name', 'address', 'phone', 'daily_operating_hours']
