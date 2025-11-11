@@ -1,14 +1,19 @@
 class Order(models.Model):
-        # ...existing fields...
-        
-            def get_unique_item_names(self):
-                    """
-                            Gather all unique menu item names for this order.
-                                    Returns:
-                                                List of unique menu item names (list of str).
-                                                        """
-                                                                item_names = {
-                                                                            order_item.menu_item.name
-                                                                                        for order_item in self.orderitem_set.all()
-                                                                                                }
-                                                                                                        return list(item_names)                                                                                                                                                                          order = models.Fore         
+        # Assuming you have a status field and you want to define statuses as string constants
+            STATUS_COMPLETED = 'COMPLETED'
+                STATUS_PENDING = 'PENDING'  # example existing status
+                    STATUS_CHOICES = [
+                            (STATUS_PENDING, 'Pending'),
+                                    (STATUS_COMPLETED, 'Completed'),
+                                            # ... other statuses ...
+                                                ]
+
+                                                    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
+                                                        # ... other fields ...
+
+                                                            def mark_as_completed(self):
+                                                                    """
+                                                                            Mark this order as completed by updating the status and saving.
+                                                                                    """
+                                                                                            self.status = self.STATUS_COMPLETED
+                                                                                                    self.save()
