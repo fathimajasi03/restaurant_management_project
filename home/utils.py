@@ -1,19 +1,28 @@
 from datetime import datetime
+from home.models import DailyOperatingHours  # adjust import path as needed
 
-def format_datetime(dt):
+def is_reservation_time_valid(proposed_datetime: datetime) -> bool:
     """
-        Format a datetime object into a readable string like:
-            'January 1, 2023 at 10:30 AM'.
-                
-                    If dt is None, returns an empty string.
-                        
-                            Args:
-                                    dt (datetime or None): The datetime object to format.
-                                        
-                                            Returns:
-                                                    str: Formatted datetime string or empty string if dt is None.
-                                                        """
-                                                            if dt is None:
-                                                                    return ""
-                                                                        # Format datetime using strftime with full month name, day, year, and 12-hour time with AM/PM
-                                                                            return dt.strftime("%B %-d, %Y at %-I:%M %p")
+        Checks if the proposed reservation datetime falls within the restaurant's operating hours on that day.
+
+            Args:
+                    proposed_datetime (datetime): The desired reservation date and time.
+
+                        Returns:
+                                bool: True if within operating hours, False otherwise.
+                                    """
+                                        weekday = proposed_datetime.strftime('%A')  # full weekday name e.g. 'Monday'
+                                            
+                                                try:
+                                                        operating_hours = DailyOperatingHours.objects.get(day=weekday)
+                                                            except DailyOperatingHours.DoesNotExist:
+                                                                    return False  # No operating hours configured for the day
+
+                                                                        # Extract the time component of the proposed datetime
+                                                                            proposed_time = proposed_datetime.time()
+
+                                                                                # Validate if proposed_time is strictly between open_time and close_time
+                                                                                    if operating_hours.open_time < proposed_time < operating_hours.close_time:
+                                                                                            return True
+                                                                                                else:
+                                                                                                        return False
