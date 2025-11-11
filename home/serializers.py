@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from .models import Restaurant, DailyOperatingHours
+from .models import MenuItem
 
-class RestaurantSerializer(serializers.ModelSerializer):
-    daily_operating_hours = DailyOperatingHoursSerializer(many=True, read_only=True)
-
-        class Meta:
-                model = Restaurant
-                        fields = ['id', 'name', 'address', 'phone', 'daily_operating_hours']
+class MenuItemAvailabilitySerializer(serializers.ModelSerializer):
+    class Meta:
+            model = MenuItem
+                    fields = ['id', 'is_available']
+                            read_only_fields = ['id']
