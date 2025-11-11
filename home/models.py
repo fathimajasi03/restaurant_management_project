@@ -1,15 +1,10 @@
-import datetime
 from django.db import models
 
-class ReservationManager(models.Manager):
-    def get_upcoming_reservations(self):
-            now = datetime.datetime.now()
-                    return self.filter(reservation_datetime__gte=now)
+class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+        price = models.DecimalField(max_digits=6, decimal_places=2)
+            is_available = models.BooleanField(default=True)
+                # Other fields...
 
-                    class Reservation(models.Model):
-                        # your existing fields here
-                            reservation_datetime = models.DateTimeField()
-                                # assign the custom manager
-                                    objects = ReservationManager()
-
-                                        # other methods, fields, etc.
+                    def __str__(self):
+                            return self.name
