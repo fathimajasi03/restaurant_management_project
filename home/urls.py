@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import RestaurantDetailAPIView
+from .views import update_menu_item_availability
 
 urlpatterns = [
-    path('api/restaurant/<int:pk>/', RestaurantDetailAPIView.as_view(), name='restaurant-detail'),
+    path('menu-items/<int:pk>/availability/', update_menu_item_availability, name='update-menuitem-availability'),
     ]
