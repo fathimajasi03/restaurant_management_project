@@ -1,10 +1,10 @@
 from django.db import models
 
-class MenuItem(models.Model):
-    name = models.CharField(max_length=255)
-        price = models.DecimalField(max_digits=6, decimal_places=2)
-            is_available = models.BooleanField(default=True)
-                # Other fields...
+class Customer(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+        phone = models.CharField(max_length=20, blank=True, null=True)
+            email = models.EmailField(blank=True, null=True)
+                created_at = models.DateTimeField(auto_now_add=True)
 
                     def __str__(self):
-                            return self.name
+                            return self.name if self.name else f"Customer {self.id}"
