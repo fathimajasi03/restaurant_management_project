@@ -1,7 +1,8 @@
 from django.db import models
 
-class Table(models.Model):
+class MenuItem(models.Model):
     # ... existing fields ...
-        max_seats = models.IntegerField(default=4)  # mandatory, default to 4 seats
-
-            # ... any other methods or fields ...
+        is_gluten_free = models.BooleanField(
+                default=False,
+                        help_text='Indicates if the menu item is gluten-free.'
+                            )
