@@ -1,28 +1,24 @@
 from datetime import datetime
-from home.models import DailyOperatingHours  # adjust import path as needed
+from .models import DailyOperatingHours
 
-def is_reservation_time_valid(proposed_datetime: datetime) -> bool:
-    """
-        Checks if the proposed reservation datetime falls within the restaurant's operating hours on that day.
+def is_restaurant_open():
+    # Get current day and time
+        now = datetime.now()
+            current_day = now.strftime('%A')  # Get the full weekday name (e.g., Monday, Tuesday, etc.)
+                current_time = now.time()
 
-            Args:
-                    proposed_datetime (datetime): The desired reservation date and time.
+                    # Query DailyOperatingHours model for the current day
+                        try:
+                                operating_hours = DailyOperatingHours.objects.get(day=current_day)
+                                    except DailyOperatingHours.DoesNotExist:
+                                            # If no operating hours are defined for the current day, assume the restaurant is closed
+                                                    return False
 
-                        Returns:
-                                bool: True if within operating hours, False otherwise.
-                                    """
-                                        weekday = proposed_datetime.strftime('%A')  # full weekday name e.g. 'Monday'
-                                            
-                                                try:
-                                                        operating_hours = DailyOperatingHours.objects.get(day=weekday)
-                                                            except DailyOperatingHours.DoesNotExist:
-                                                                    return False  # No operating hours configured for the day
+                                                        # Compare current time with opening and closing times
+                                                            opening_time = operating_hours.opening_time
+                                                                closing_time = operating_hours.closing_time
 
-                                                                        # Extract the time component of the proposed datetime
-                                                                            proposed_time = proposed_datetime.time()
-
-                                                                                # Validate if proposed_time is strictly between open_time and close_time
-                                                                                    if operating_hours.open_time < proposed_time < operating_hours.close_time:
-                                                                                            return True
-                                                                                                else:
-                                                                                                        return False
+                                                                    if opening_time <= current_time < closing_time:
+                                                                            return True
+                                                                                else:
+                                                                                        return False
