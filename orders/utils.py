@@ -1,19 +1,12 @@
-import re
+# orders/utils.py
 
-def is_valid_phone_number(phone_number):
+def calculate_estimated_prep_time(order_items):
     """
-        Validate a phone number string against a basic pattern.
-            
-                Allows:
-                    - 10 to 12 digits total
-                        - Optional country code prefix starting with '+'
-                            - Spaces or hyphens as separators
-                                
-                                    Args:
-                                            phone_number (str): The phone number to validate
-                                                
-                                                    Returns:
-                                                            bool: True if the phone number matches the pattern, False otherwise
-                                                                """
-                                                                    pattern = re.compile(r'^(+?d{1,3}[- ]?)?(d{3}[- ]?d{3}[- ]?d{4})$')
-                                                                        return bool(pattern.match(phone_number))
+        Given a list of order_items (each with 'quantity' and 'prep_time_minutes'),
+            returns the total preparation time in minutes as an integer.
+                """
+                    total_prep_time = 0
+                        for item in order_items:
+                                item_prep_time = item.get('prep_time_minutes', 0) * item.get('quantity', 0)
+                                        total_prep_time += item_prep_time
+                                            return int(total_prep_time)
