@@ -1,11 +1,8 @@
+# orders/admin.py
 from django.contrib import admin
-from .models import *
+from .models import Order
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer', 'total_amount', 'order_status')
 
-# Custom Admins
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ['item_name','item_price','created_at']
-
-
-# Register your models here.
-admin.site.register(Item,ItemAdmin)
+    admin.site.register(Order, OrderAdmin)
