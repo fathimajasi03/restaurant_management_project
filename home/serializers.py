@@ -1,8 +1,8 @@
+# home/serializers.py
 from rest_framework import serializers
 from .models import MenuItem
 
-class MenuItemAvailabilitySerializer(serializers.ModelSerializer):
+class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
             model = MenuItem
-                    fields = ['id', 'is_available']
-                            read_only_fields = ['id']
+                    fields = ['id', 'name', 'price', 'is_available', 'is_vegetarian']  # Add is_vegetarian
