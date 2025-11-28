@@ -1,13 +1,31 @@
 # home/models.py
 from django.db import models
-from django.utils import timezone
 
-class DailySpecial(models.Model):
-    name = models.CharField(max_length=255)
-        description = models.TextField()
-            price = models.DecimalField(max_digits=8, decimal_places=2)
-                is_available = models.BooleanField(default=True)
-                    date = models.DateField(default=timezone.now().date)
+class Staff(models.Model):
+    CHEF = 'Chef'
+        WAITER = 'Waiter'
+            MANAGER = 'Manager'
 
-                        def __str__(self):
-                                return f"{self.name} - {self.date}"
+                ROLE_CHOICES = [
+                        (CHEF, 'Chef'),
+                                (WAITER, 'Waiter'),
+                                        (MANAGER, 'Manager'),
+                                            ]
+
+                                                first_name = models.CharField(max_length=100)
+                                                    last_name = models.CharField(max_length=100)
+                                                        role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+                                                            contact_email = models.EmailField()
+
+                                                                def __str__(self):
+                                                                        return f"{self.first_name} {self.last_name} - {self.role}"
+
+                                                                        # home/admin.py
+                                                                        from django.contrib import admin
+                                                                        from .models import Staff
+
+                                                                        @admin.register(Staff)
+                                                                        class StaffAdmin(admin.ModelAdmin):
+                                                                            list_display = ('first_name', 'last_name', 'role', 'contact_email')
+                                                                                list_filter = ('role',)
+                                                                                    search_fields = ('first_name', 'last_name', 'contact_email')
