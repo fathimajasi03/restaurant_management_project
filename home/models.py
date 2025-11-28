@@ -1,6 +1,13 @@
 # home/models.py
 from django.db import models
+from django.utils import timezone
 
-class MenuItem(models.Model):
-    # ... your existing fields ...
-        is_active = models.BooleanField(default=True)
+class DailySpecial(models.Model):
+    name = models.CharField(max_length=255)
+        description = models.TextField()
+            price = models.DecimalField(max_digits=8, decimal_places=2)
+                is_available = models.BooleanField(default=True)
+                    date = models.DateField(default=timezone.now().date)
+
+                        def __str__(self):
+                                return f"{self.name} - {self.date}"
