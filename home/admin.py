@@ -1,17 +1,7 @@
-# Open your terminal and run these commands:
+# home/admin.py
+from django.contrib import admin
+from .models import DailySpecial
 
-# 1. Create the main Django project:
-django-admin startproject myrestaurant
-
-# 2. Navigate into the project directory:
-cd myrestaurant
-
-# 3. Create your primary app named 'home':
-python manage.py startapp home
-
-# 4. Open your project's settings.py file and add 'home' to INSTALLED_APPS:
-# INSTALLED_APPS = [
-#     ...
-#     'home',
-#     ...
-# ]
+@admin.register(DailySpecial)
+class DailySpecialAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'is_available', 'date')
