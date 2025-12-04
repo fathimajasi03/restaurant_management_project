@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import MyLoyaltyPointsView
+from rest_framework.routers import DefaultRouter
+from account.views import StaffViewSet
 
-urlpatterns = [
-    path('api/my-loyalty-points/', MyLoyaltyPointsView.as_view(), name='my-loyalty-points'),
-    ]
+router = DefaultRouter()
+router.register(r'staff', StaffViewSet, basename='staff')
+
+urlpatterns = router.urls
