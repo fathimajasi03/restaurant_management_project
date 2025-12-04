@@ -1,11 +1,7 @@
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from .serializers import UserLoyaltySerializer
+from rest_framework import viewsets
+from account.models import Staff
+from account.serializers import StaffSerializer
 
-class MyLoyaltyPointsView(APIView):
-    permission_classes = [IsAuthenticated]
-
-        def get(self, request):
-                serializer = UserLoyaltySerializer(request.user)
-                        return Response(serializer.data)g
+class StaffViewSet(viewsets.ModelViewSet):
+    queryset = Staff.objects.all()
+        serializer_class = StaffSerializer
