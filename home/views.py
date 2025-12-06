@@ -1,19 +1,21 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from .models import MenuItem
-from .serializers import MenuItemAvailabilitySerializer
+# home/views.py
+from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import HolidayHours
+from .serializers import HolidayHoursSerializer
 
-@api_view(['PATCH'])
-def update_menu_item_availability(request, pk):
-    try:
-            menu_item = MenuItem.objects.get(pk=pk)
-                except MenuItem.DoesNotExist:
-                        return Response({"error": "Menu item not found."}, status=status.HTTP_404_NOT_FOUND)
+class HolidayHoursListView(generics.ListAPIView):
+    queryset = HolidayHours.objects.all()
+        serializer_class = HolidayHoursSerializer
+            filter_backends = [DjangoFilterBackend]
+                filterset_fields = ['date', 'restaurant']# home/views.py
+                from rest_framework import generics
+                from django_filters.rest_framework import DjangoFilterBackend
+                from .models import HolidayHours
+                from .serializers import HolidayHoursSerializer
 
-                            serializer = MenuItemAvailabilitySerializer(menu_item, data=request.data, partial=True)
-                                if serializer.is_valid():
-                                        serializer.save()
-                                                return Response({"message": "Availability updated successfully.", "data": serializer.data})
-                                                    else:
-                                                            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                class HolidayHoursListView(generics.ListAPIView):
+                    queryset = HolidayHours.objects.all()
+                        serializer_class = HolidayHoursSerializer
+                            filter_backends = [DjangoFilterBackend]
+                                filterset_fields = ['date', 'restaurant']
