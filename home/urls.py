@@ -1,6 +1,7 @@
+# home/urls.py
 from django.urls import path
-from .views import update_menu_item_availability
+from . import views
 
 urlpatterns = [
-    path('menu-items/<int:pk>/availability/', update_menu_item_availability, name='update-menuitem-availability'),
+    path('api/holiday-hours/', views.HolidayHoursListView.as_view(), name='holiday-hours-list'),
     ]
