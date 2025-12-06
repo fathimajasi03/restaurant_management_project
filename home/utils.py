@@ -1,24 +1,23 @@
-from datetime import datetime
-from .models import DailyOperatingHours
+import re
 
-def is_restaurant_open():
-    # Get current day and time
-        now = datetime.now()
-            current_day = now.strftime('%A')  # Get the full weekday name (e.g., Monday, Tuesday, etc.)
-                current_time = now.time()
-
-                    # Query DailyOperatingHours model for the current day
+def format_phone_number(phone_str):
+    """
+        Format a phone number string as (XXX) XXX-XXXX.
+            Handles numbers with or without country code.
+                Returns cleaned/standardized string, or the input if invalid.
+                    """
                         try:
-                                operating_hours = DailyOperatingHours.objects.get(day=current_day)
-                                    except DailyOperatingHours.DoesNotExist:
-                                            # If no operating hours are defined for the current day, assume the restaurant is closed
-                                                    return False
+                                # Remove non-digit characters
+                                        digits = re.sub(r'D', '', phone_str)
 
-                                                        # Compare current time with opening and closing times
-                                                            opening_time = operating_hours.opening_time
-                                                                closing_time = operating_hours.closing_time
+                                                # Remove leading '1' (US country code), if present
+                                                        if len(digits) == 11 and digits.startswith('1'):
+                                                                    digits = digits[1:]
 
-                                                                    if opening_time <= current_time < closing_time:
-                                                                            return True
-                                                                                else:
-                                                                                        return False
+                                                                            if len(digits) != 10:
+                                                                                        raise ValueError('Phone number must have 10 digits.')
+
+                                                                                                return f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
+                                                                                                    except Exception as e:
+                                                                                                            # Handle invalid input by returning the input as-is or a default string
+                                                                                                                    return phone_str  # Or: f"Invalid: {phone_str}"
