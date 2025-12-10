@@ -1,16 +1,28 @@
 # home/utils.py
-from decimal import Decimal
+from django.utils import timezone
+from .models import DailyOperatingHours
 
-def format_price(price, currency_symbol='$'):
+def is_restaurant_open(restaurant_id):
     """
-        Format a price value as currency string with 2 decimal places.
+        Check if restaurant is currently open based on today's operating hours.
             
                 Args:
-                        price: float or Decimal value
-                                currency_symbol: currency symbol (default: '$')
-                                    
-                                        Returns:
-                                                str: formatted currency string
-                                                    """
-                                                        price = Decimal(str(price)).quantize(Decimal('0.00'))
-                                                            return f"{currency_symbol}{price}"
+                        restaurant_id: ID of the restaurant
+                                
+                                    Returns:
+                                            bool: True if open, False if closed
+                                                """
+                                                    now = timezone.now()
+                                                        today = now.date().strftime('%A')  # Gets 'Monday', 'Tuesday', etc.
+                                                            current_time = now.time()
+                                                                
+                                                                    try:
+                                                                            hours = DailyOperatingHours.objects.get(
+                                                                                        restaurant_id=restaurant_id,
+                                                                                                    day_of_week=today
+                                                                                                            )
+                                                                                                                    
+                                                                                                                            return hours.opening_time <= current_time <= hours.closing_time
+                                                                                                                                    
+                                                                                                                                        except DailyOperatingHours.DoesNotExist:
+                                                                                                                                                return False  # No hours defined for today = closed
