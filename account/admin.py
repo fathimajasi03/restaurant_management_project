@@ -1,3 +1,10 @@
+# account/admin.py
 from django.contrib import admin
+from .models import LoyaltyProgram
 
-# Register your models here.
+class LoyaltyProgramAdmin(admin.ModelAdmin):
+    list_display = ['name', 'points_per_dollar_spent', 'is_active']
+        list_filter = ['is_active']
+            search_fields = ['name']
+
+            admin.site.register(LoyaltyProgram, LoyaltyProgramAdmin)
