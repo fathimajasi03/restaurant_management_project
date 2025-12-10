@@ -1,8 +1,11 @@
 # home/serializers.py
 from rest_framework import serializers
-from .models import HolidayHours
+from django.db.models import Count
+from .models import MenuCategory
 
-class HolidayHoursSerializer(serializers.ModelSerializer):
-    class Meta:
-            model = HolidayHours
-                    fields = ['id', 'restaurant', 'date', 'opening_time', 'closing_time', 'description']
+class MenuCategoryWithCountSerializer(serializers.ModelSerializer):
+    item_count = serializers.IntegerField(read_only=True)
+
+        class Meta:
+                model = MenuCategory
+                        fields = ['id', 'name', 'item_count']
