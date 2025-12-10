@@ -1,10 +1,12 @@
 # home/views.py
 from rest_framework import generics
-from .models import MenuItem
-from .serializers import MenuItemSerializer
+from .models import MenuCategory
+from .serializers import MenuCategoryWithCountSerializer
 
-class ActiveMenuItemsView(generics.ListAPIView):
-    serializer_class = MenuItemSerializer
+class MenuCategoriesView(generics.ListAPIView):
+    serializer_class = MenuCategoryWithCountSerializer
 
         def get_queryset(self):
-                return MenuItem.objects.filter(is_active=True)
+                return MenuCategory.objects.annotate(
+                            item_count=Count('menuitem')
+                                    )
