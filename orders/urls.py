@@ -1,6 +1,9 @@
+# orders/urls.py
 from django.urls import path
-from .views import PaymentMethodListAPIView
+from . import views
 
 urlpatterns = [
-    path('api/payment-methods/', PaymentMethodListAPIView.as_view(), name='payment-methods-list'),
-    ]
+    path('api/reservation/<int:reservation_id>/status/', 
+             views.UpdateReservationStatusView.as_view(), 
+                      name='update-reservation-status'),
+                      ]
