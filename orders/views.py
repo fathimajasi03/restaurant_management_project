@@ -1,10 +1,13 @@
-from rest_framework.generics import ListAPIView
-from .models import PaymentMethod
-from .serializers import PaymentMethodSerializer
+# orders/views.py
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+from .models import Reservation
+from .serializers import ReservationStatusSerializer
 
-class PaymentMethodListAPIView(ListAPIView):
-    serializer_class = PaymentMethodSerializer
+class UpdateReservationStatusView(generics.UpdateAPIView):
+    serializer_class = ReservationStatusSerializer
+        permission_classes = [IsAuthenticated]
 
-        def get_queryset(self):
-                # Only return active payment methods
-                        return PaymentMethod.objects.filter(is_active=True)
+            def get_object(self):
+                    return get_object_or_404(Reservation, id=self.kwargs['reservation_id'])
