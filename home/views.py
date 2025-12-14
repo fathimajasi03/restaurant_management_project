@@ -1,12 +1,8 @@
 # home/views.py
 from rest_framework import generics
-from .models import MenuCategory
-from .serializers import MenuCategoryWithCountSerializer
+from .models import StaffShift
+from .serializers import StaffShiftSerializer
 
-class MenuCategoriesView(generics.ListAPIView):
-    serializer_class = MenuCategoryWithCountSerializer
-
-        def get_queryset(self):
-                return MenuCategory.objects.annotate(
-                            item_count=Count('menuitem')
-                                    )
+class StaffShiftListView(generics.ListAPIView):
+    queryset = StaffShift.objects.all()
+        serializer_class = StaffShiftSerializer
