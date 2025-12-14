@@ -1,17 +1,11 @@
 # home/models.py
 from django.db import models
 
-class FeedbackCategory(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-        
-            def __str__(self):
-                    return self.name
+class HolidayClosure(models.Model):
+    date = models.DateField()
+        reason = models.CharField(max_length=255)
+            is_full_day_closure = models.BooleanField(default=True)
 
-                    class Feedback(models.Model):
-                        # ... existing fields ...
-                            category = models.ForeignKey(
-                                    FeedbackCategory, 
-                                            on_delete=models.SET_NULL, 
-                                                    null=True, 
-                                                            blank=True
-                                                                )
+                def __str__(self):
+                        status = "Full Day Closure" if self.is_full_day_closure else "Partial Closure"
+                                return f"{self.date} - {self.reason} ({status})"
