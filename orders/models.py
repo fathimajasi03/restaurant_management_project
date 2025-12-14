@@ -1,11 +1,9 @@
-# Model update (if needed) - orders/models.py
-class Reservation(models.Model):
-    STATUS_CHOICES = [
-            ('pending', 'Pending'),
-                    ('confirmed', 'Confirmed'),
-                            ('cancelled', 'Cancelled'),
-                                    ('completed', 'Completed'),
-                                            ('no_show', 'No Show'),
-                                                ]
-                                                    # ... other fields ...
-                                                        status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+# orders/models.py
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Reservation
+
+@receiver(post_save, sender=Reservation)
+def log_new_reservation(sender, instance, created, **kwargs):
+    if created:
+            print(f"New reservation created: ID #{instance.id} for {instance.customer_name} at {instance.time}")
