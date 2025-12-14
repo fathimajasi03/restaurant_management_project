@@ -1,11 +1,14 @@
 # home/models.py
 from django.db import models
 
-class HolidayClosure(models.Model):
-    date = models.DateField()
-        reason = models.CharField(max_length=255)
-            is_full_day_closure = models.BooleanField(default=True)
+class StaffShift(models.Model):
+    staff_member = models.ForeignKey('RestaurantStaff', on_delete=models.CASCADE)
+        start_time = models.DateTimeField()
+            end_time = models.DateTimeField()
+                date = models.DateField()
 
-                def __str__(self):
-                        status = "Full Day Closure" if self.is_full_day_closure else "Partial Closure"
-                                return f"{self.date} - {self.reason} ({status})"
+                    def __str__(self):
+                            return f"{self.staff_member} - {self.date} ({self.start_time} to {self.end_time})"
+
+                                class Meta:
+                                        ordering = ['date', 'start_time']
