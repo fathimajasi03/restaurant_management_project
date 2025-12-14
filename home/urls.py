@@ -1,4 +1,8 @@
 # home/urls.py
+from django.urls import path
+from . import views
+
 urlpatterns = [
-    path('api/menu/categories/', views.MenuCategoriesView.as_view(), name='menu-categories'),
-    ]
+    # ... existing URLs ...
+        path('api/shifts/', views.StaffShiftListView.as_view(), name='staff-shifts'),
+        ]
