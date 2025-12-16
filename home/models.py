@@ -1,20 +1,20 @@
 # home/models.py
 from django.db import models
 
-DIETARY_CHOICES = [
-    ('VEGAN', 'Vegan'),
-        ('VEGETARIAN', 'Vegetarian'),
-            ('GLUTEN_FREE', 'Gluten-Free'),
-                ('HALAL', 'Halal'),
-                    ('NONE', 'None'),
-                    ]
+class Allergen(models.Model):
+    name = models.CharField(max_length=100, unique=True)
 
-                    class MenuItem(models.Model):
-                        # ... existing fields ...
-                            dietary_preference = models.CharField(
-                                    max_length=20,
-                                            choices=DIETARY_CHOICES,
-                                                    default='NONE',
-                                                            blank=True,
-                                                                    null=True
-                                                                        )
+        def __str__(self):
+                return self.name
+
+
+                class MenuItem(models.Model):
+                    # ... existing fields ...
+                        name = models.CharField(max_length=255)
+                            price = models.DecimalField(max_digits=8, decimal_places=2)
+                                # any other existing fields...
+
+                                    allergens = models.ManyToManyField(Allergen, blank=True)
+
+                                        def __str__(self):
+                                                return self.name
