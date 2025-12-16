@@ -1,8 +1,8 @@
 # home/serializers.py
 from rest_framework import serializers
-from .models import StaffShift
+from .models import Allergen
 
-class StaffShiftSerializer(serializers.ModelSerializer):
+class AllergenSerializer(serializers.ModelSerializer):
     class Meta:
-            model = StaffShift
-                    fields = '__all__'  # Includes all fields from StaffShift model
+            model = Allergen
+                    fields = ['id', 'name']
