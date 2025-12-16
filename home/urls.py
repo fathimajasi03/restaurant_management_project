@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     # ... existing URLs ...
-        path('api/shifts/', views.StaffShiftListView.as_view(), name='staff-shifts'),
+        path('api/allergens/', views.AllergenListView.as_view(), name='allergen-list'),
         ]
