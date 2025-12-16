@@ -1,8 +1,8 @@
 # home/views.py
 from rest_framework import generics
-from .models import StaffShift
-from .serializers import StaffShiftSerializer
+from .models import Allergen
+from .serializers import AllergenSerializer
 
-class StaffShiftListView(generics.ListAPIView):
-    queryset = StaffShift.objects.all()
-        serializer_class = StaffShiftSerializer
+class AllergenListView(generics.ListAPIView):
+    queryset = Allergen.objects.all()
+        serializer_class = AllergenSerializer
